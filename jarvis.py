@@ -35,7 +35,7 @@ merry = "Jarvis: " + "как пожелаете"
 rec = sr.Recognizer()
 rec.pause_threshold = 0.5
 
-def Jarvis():
+def Jarvis(what: str):
     model, _ = torch.hub.load(repo_or_dir='snakers4/silero-models',
                               model='silero_tts',
                               language=language,
@@ -49,135 +49,7 @@ def Jarvis():
                             put_accent=put_accent,
                             put_yo=put_yoo)
 
-    print("Jarvis: " + Hello)
-    sd.play(audio, sample_rate)
-    time.sleep(len(audio) / doc)
-
-def command_Error():
-    model, _ = torch.hub.load(repo_or_dir='snakers4/silero-models',
-                              model='silero_tts',
-                              language=language,
-                              speaker=model_id)
-
-    model.to(device)
-
-    audio = model.apply_tts(text=error_command,
-                            speaker=speakers,
-                            sample_rate=sample_rate,
-                            put_accent=put_accent,
-                            put_yo=put_yoo)
-
-    print("Jarvis: " + error_command)
-    sd.play(audio, sample_rate)
-    time.sleep(len(audio) / doc)
-
-def Bye():
-    model, _ = torch.hub.load(repo_or_dir='snakers4/silero-models',
-                              model='silero_tts',
-                              language=language,
-                              speaker=model_id)
-
-    model.to(device)
-
-    audio = model.apply_tts(text=bye,
-                            speaker=speakers,
-                            sample_rate=sample_rate,
-                            put_accent=put_accent,
-                            put_yo=put_yoo)
-
-    print("Jarvis: " + bye)
-    sd.play(audio, sample_rate)
-    time.sleep(len(audio) / doc)
-
-def SeeYa():
-    model, _ = torch.hub.load(repo_or_dir='snakers4/silero-models',
-                              model='silero_tts',
-                              language=language,
-                              speaker=model_id)
-
-    model.to(device)
-
-    audio = model.apply_tts(text=see_ya,
-                            speaker=speakers,
-                            sample_rate=sample_rate,
-                            put_accent=put_accent,
-                            put_yo=put_yoo)
-
-    print("Jarvis: " + see_ya)
-    sd.play(audio, sample_rate)
-    time.sleep(len(audio) / doc)
-
-def Time_and_date():
-    model, _ = torch.hub.load(repo_or_dir='snakers4/silero-models',
-                              model='silero_tts',
-                              language=language,
-                              speaker=model_id)
-
-    model.to(device)
-
-    audio = model.apply_tts(text="Сейчас " + f'{now.hour} и {now.minute}',
-                            speaker=speakers,
-                            sample_rate=sample_rate,
-                            put_accent=put_accent,
-                            put_yo=put_yoo)
-
-    print("Jarvis: " + 'Cейчас ' + str(now.hour) + ':' + str(now.minute))
-    sd.play(audio, sample_rate)
-    time.sleep(len(audio) / doc)
-
-
-def YouSure():
-    model, _ = torch.hub.load(repo_or_dir='snakers4/silero-models',
-                              model='silero_tts',
-                              language=language,
-                              speaker=model_id)
-
-    model.to(device)
-
-    audio = model.apply_tts(text="вы уверены",
-                            speaker=speakers,
-                            sample_rate=sample_rate,
-                            put_accent=put_accent,
-                            put_yo=put_yoo)
-
-    print("Jarvis: " + "вы уверены?")
-    sd.play(audio, sample_rate)
-    time.sleep(len(audio) / doc)
-
-
-def Music_Play():
-    model, _ = torch.hub.load(repo_or_dir='snakers4/silero-models',
-                              model='silero_tts',
-                              language=language,
-                              speaker=model_id)
-
-    model.to(device)
-
-    audio = model.apply_tts(text=merry,
-                            speaker=speakers,
-                            sample_rate=sample_rate,
-                            put_accent=put_accent,
-                            put_yo=put_yoo)
-
-    print(merry)
-    sd.play(audio, sample_rate)
-    time.sleep(len(audio) / doc)
-
-def Music_Stop():
-    model, _ = torch.hub.load(repo_or_dir='snakers4/silero-models',
-                              model='silero_tts',
-                              language=language,
-                              speaker=model_id)
-
-    model.to(device)
-
-    audio = model.apply_tts(text=merry,
-                            speaker=speakers,
-                            sample_rate=sample_rate,
-                            put_accent=put_accent,
-                            put_yo=put_yoo)
-
-    print(merry)
+    print("Jarvis: " + what)
     sd.play(audio, sample_rate)
     time.sleep(len(audio) / doc)
 
@@ -190,19 +62,15 @@ with sr.Microphone() as source:
     print("вы: " + query)
 
     if(query == "джарвис"):
-        Jarvis()
+        Jarvis(Hello)
     elif(query == "отключись"):
-        Bye()
+        Jarvis(Bye)
         exit()
     elif(query == config.Shut_Down):
-        YouSure()
-    elif(query == 'да'):
-        SeeYa()
+        Jarvis("Выключаю")
         os.system('shutdown /s /t 0')
     elif(query == config.Restart):
-        YouSure()
-    elif(query == 'да'):
-        SeeYa()
+        Jarvis("")
         os.system('shutdown /r /t 0')
     elif(query == config.Censored):
         os.system('')
